@@ -1,0 +1,53 @@
+let degrees = 0
+let direction = ""
+// Pin M0
+input.onPinPressed(TouchPin.P0, function () {
+    serial.redirectToUSB()
+    serial.writeLine("P0")
+})
+// Button A
+input.onButtonPressed(Button.A, function () {
+    serial.redirectToUSB()
+    serial.writeLine("A")
+})
+// Pin M2
+input.onPinPressed(TouchPin.P2, function () {
+    serial.redirectToUSB()
+    serial.writeLine("P2")
+})
+// Button B
+input.onButtonPressed(Button.B, function () {
+    serial.redirectToUSB()
+    serial.writeLine("B")
+})
+// Pin M1
+input.onPinPressed(TouchPin.P1, function () {
+    serial.redirectToUSB()
+    serial.writeLine("P1")
+})
+// SHAKE function
+input.onGesture(Gesture.Shake, function () {
+    serial.redirectToUSB()
+    serial.writeLine("SHAKE")
+})
+basic.forever(function () {
+    degrees = input.compassHeading()
+    if (degrees < 45) {
+        basic.showArrow(ArrowNames.North)
+        direction = "North"
+    } else if (degrees < 135) {
+        basic.showArrow(ArrowNames.East)
+        direction = "East"
+    } else if (degrees < 225) {
+        basic.showArrow(ArrowNames.South)
+        direction = "South"
+    } else if (degrees < 315) {
+        basic.showArrow(ArrowNames.West)
+        direction = "West"
+    } else {
+        basic.showArrow(ArrowNames.North)
+        direction = "North"
+    }
+    serial.writeLine("" + direction + " @ " + degrees + " degrees")
+    basic.pause(10)
+})
